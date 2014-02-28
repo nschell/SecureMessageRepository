@@ -16,6 +16,7 @@ import static junit.framework.Assert.assertEquals;
  * Created by Administrator on 2/20/14.
  */
 
+//Writes the Access Control type to an XML file
 
 public class TestAccessControl {
 
