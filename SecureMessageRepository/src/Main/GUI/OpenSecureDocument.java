@@ -7,9 +7,12 @@ import javax.swing.*;
  */
 public class OpenSecureDocument {
     private JPanel panel1;
-    private JTextPane secureMessageRepositoryTextPane;
+    private JTextPane secureMessageRepositoryMessageTextPane;
     private JButton exitProgramButton;
     private JButton saveButton;
     private JButton backButton;
     private JButton deleteMessageButton;
+    private JTextField txtAuthor;
+    private JTextField txtCreated;
+    private JTextField txtModified;
 }
