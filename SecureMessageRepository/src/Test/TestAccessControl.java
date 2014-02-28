@@ -1,5 +1,6 @@
 package Test;
 import Main.SecureDocument;
+import Main.AccessControl;
 import Main.XMLParse;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -68,10 +69,56 @@ public class TestAccessControl {
         g.setInformation("Jack Bauer on his way to England, thwarting a terrorist attack for 24 Live Another Day");
         g.setAccessControl(true);
 
+        AccessControl h = new AccessControl();
+        Boolean readControl = true;
+        String readControlList[] = {"eschell", "vschell", "sschell"};
+        Boolean writeControl = false;
+        String writeControlList[] = {};
+        Boolean ownControl = true;
+        String ownControlList[] = {"nschell"};
+        h.setReadControl(readControl);
+        h.setReadControlList(readControlList);
+        h.setWriteControl(writeControl);
+        h.setWriteControlList(writeControlList);
+        h.setOwnControl(ownControl);
+        h.setOwnControlList(ownControlList);
+
+        AccessControl i = new AccessControl();
+        Boolean ireadControl = true;
+        String ireadControlList[] = {"sschell"};
+        Boolean iwriteControl = true;
+        String iwriteControlList[] = {"eschell"};
+        Boolean iownControl = true;
+        String iownControlList[] = {"nschell"};
+        i.setReadControl(ireadControl);
+        i.setReadControlList(ireadControlList);
+        i.setWriteControl(iwriteControl);
+        i.setWriteControlList(iwriteControlList);
+        i.setOwnControl(iownControl);
+        i.setOwnControlList(iownControlList);
+
+        AccessControl j = new AccessControl();
+        Boolean jreadControl = true;
+        String jreadControlList[] = {"eschell", "vschell", "sschell"};
+        Boolean jwriteControl = false;
+        String jwriteControlList[] = {};
+        Boolean jownControl = true;
+        String jownControlList[] = {"nschell"};
+        j.setReadControl(jreadControl);
+        j.setReadControlList(jreadControlList);
+        j.setWriteControl(jwriteControl);
+        j.setWriteControlList(jwriteControlList);
+        j.setOwnControl(jownControl);
+        j.setOwnControlList(jownControlList);
+
         XMLParse.objectToXML(d, "c:\\test\\test1.xml");
         XMLParse.objectToXML(e, "c:\\test\\test2.xml");
         XMLParse.objectToXML(f, "c:\\test\\test3.xml");
         XMLParse.objectToXML(g, "c:\\test\\test4.xml");
+
+        XMLParse.SecureobjectToXML(h, "c:\\test\\Accesstest2.xml");
+        XMLParse.SecureobjectToXML(i, "c:\\test\\Accesstest3.xml");
+        XMLParse.SecureobjectToXML(j, "c:\\test\\Accesstest4.xml");
 
     }
 
