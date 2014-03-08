@@ -18,9 +18,10 @@ import static junit.framework.Assert.assertEquals;
 
 //Writes the Access Control type to an XML file
 
+
 public class TestAccessControl {
 
-    public void AccessControlTest() throws ParseException, FileNotFoundException {
+    public void main() throws ParseException, FileNotFoundException {
 
         SecureDocument d = new SecureDocument();
         String creationDate = "December 12, 2013";

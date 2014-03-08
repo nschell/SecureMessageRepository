@@ -17,17 +17,23 @@ public class deleteXMLFile {
         Boolean deleteFile;
         Boolean deleteAccess;
 
+        //Ensure that the XML file itself is deleted, returns a false code if undeletable
+
         if(file.delete()) {
             deleteFile = true;
         } else {
             deleteFile = false;
         }
 
+        //Ensure that the Access Value file itself is deleted, returns a false code if undeletable
+
         if(access.delete()) {
             deleteAccess = true;
         } else {
             deleteAccess = false;
         }
+
+        //Returns true if both the file and access file are deleted
 
         if((deleteFile = true) && (deleteAccess = true)) {
             return true;

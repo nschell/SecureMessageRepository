@@ -24,48 +24,48 @@ public class SecureDocument {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+    public void setCreateDate(Date createDateValue) {
+        this.createDate = createDateValue;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String usernameValue) {
+        this.username = usernameValue;
     }
 
     public Date getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setModifiedDate(Date modifiedDateValue) {
+        this.modifiedDate = modifiedDateValue;
     }
 
     public String getSubject() {
         return Subject;
     }
 
-    public void setSubject(String Subject) {
-        this.Subject = Subject;
+    public void setSubject(String SubjectValue) {
+        this.Subject = SubjectValue;
     }
 
     public String getInformation() {
         return Information;
     }
 
-    public void setInformation(String Information) {
-        this.Information = Information;
+    public void setInformation(String InformationValue) {
+        this.Information = InformationValue;
     }
 
     public Boolean getAccessControl() {
         return accessControl;
     }
 
-    public void setAccessControl(Boolean accessControl) {
-        this.accessControl = accessControl;
+    public void setAccessControl(Boolean accessControlValue) {
+        this.accessControl = accessControlValue;
     }
 
 }
