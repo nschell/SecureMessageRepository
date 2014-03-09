@@ -2,6 +2,7 @@ package Gui.mainmenugui;
 
 import Gui.createnewmessagegui.NewMessage;
 import Gui.createnewmessagegui.NewMessageMainFrame;
+import Gui.openfilegui.OpenMessageMainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,7 +64,7 @@ public class DetailsPanel extends JPanel {
         add(delete, gbc);
 
         create.addActionListener(new ActionListener() {
-            @Override
+
             public void actionPerformed(ActionEvent event) {
                 NewMessageMainFrame n = new NewMessageMainFrame("Create your new message");
                 n.setVisible(true);
@@ -72,6 +73,15 @@ public class DetailsPanel extends JPanel {
             }
 
         });
+        open.addActionListener(new ActionListener() {
 
+            public void actionPerformed(ActionEvent event) {
+                OpenMessageMainFrame n = new OpenMessageMainFrame("Open message");
+                n.setVisible(true);
+                n.setSize(950, 700);
+
+            }
+
+        });
     }
 }
