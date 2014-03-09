@@ -10,6 +10,7 @@ public class NewMessageMainFrame extends JFrame {
 
     private NewMessageDetailsPanel detailsPanel;
 
+
     public NewMessageMainFrame(String title) {
         super(title);
 

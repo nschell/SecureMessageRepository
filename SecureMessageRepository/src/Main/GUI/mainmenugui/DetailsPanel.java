@@ -1,6 +1,7 @@
 package Gui.mainmenugui;
 
 import Gui.createnewmessagegui.NewMessage;
+import Gui.createnewmessagegui.NewMessageMainFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -64,7 +65,9 @@ public class DetailsPanel extends JPanel {
         create.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-                new NewMessage();
+                NewMessageMainFrame n = new NewMessageMainFrame("Create your new message");
+                n.setVisible(true);
+                n.setSize(950, 700);
 
             }
 

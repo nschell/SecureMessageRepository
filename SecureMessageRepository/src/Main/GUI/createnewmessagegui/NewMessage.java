@@ -6,11 +6,14 @@ import javax.swing.*;
  * Created by nschell
  */
 public class NewMessage {
+    public NewMessage() {
+
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 JFrame frame = new NewMessageMainFrame("Create New Secure Message");
-                frame.setSize(650,400);
+                frame.setSize(950,700);
                 frame.setResizable(false);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);

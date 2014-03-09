@@ -25,7 +25,6 @@ public class AccessControl {
         this.readControl = readControlValue;
     }
 
-    @XmlElement(name = "Control List")
     public String[] getReadControlList() {
         return readControlList;
     }
@@ -41,7 +40,7 @@ public class AccessControl {
     public void setWriteControl(Boolean writeControlValue) {
         this.writeControl = writeControlValue;
     }
-    @XmlElement(name = "Control List")
+
     public String[] getWriteControlList() {
         return writeControlList;
     }
