@@ -1,6 +1,5 @@
 package Gui.createnewmessagegui;
 
-import Gui.mainmenugui.MainFrame;
 import Main.AccessControl;
 import Main.SecureDocument;
 import Main.XMLParse;
@@ -29,11 +28,16 @@ public class NewMessageDetailsPanel extends JPanel{
     private String filedirectory;
     public NewMessageDetailsPanel() {
 
-        Dimension size = getPreferredSize();
+        //logged in as:
         final String Username = "Temp";
+
+        //setting size and title
+        Dimension size = getPreferredSize();
         size.height = 503;
         setPreferredSize(size);
         setBorder(BorderFactory.createTitledBorder("New Secure Message: Logged In as: " + Username));
+
+        //main message text area properties
         JTextArea textArea = new JTextArea("Please enter text here:  ");
         textArea = new JTextArea(12, 55);
         JScrollPane scrollPane = new JScrollPane( textArea );
@@ -41,16 +45,20 @@ public class NewMessageDetailsPanel extends JPanel{
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(true);
+
+        //subject text area properties
         final JTextArea sub = new JTextArea("Subject:  ");
         sub.setFont(new Font("Serif", Font.BOLD, 13));
         sub.setLineWrap(true);
         sub.setWrapStyleWord(true);
         sub.setEditable(true);
 
+        //buttons defined
         JButton save = new JButton("Save");
         JButton clear = new JButton("Clear");
         JButton close = new JButton("Close/NoSave");
 
+        //Access control lists are created and customized
         ListRead = new DefaultListModel();
         ListWrite = new DefaultListModel();
         ListControl = new DefaultListModel();
@@ -70,14 +78,18 @@ public class NewMessageDetailsPanel extends JPanel{
         listcontrol.setFixedCellHeight(15);
         listcontrol.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
+        //Labels for various metadata
         JLabel location = new JLabel("File Location: ");
         JLabel subject = new JLabel("Message Subject: ");
         JLabel filename = new JLabel("Filename: ");
 
+        //checkboxes to enable/disable access controls
         final JCheckBox raccess = new JCheckBox();
         final JCheckBox waccess = new JCheckBox();
         final JCheckBox caccess = new JCheckBox();
 
+        //set access control properties
+        //users can input usernames and save them to list
         read = new JTextField(20);
         write = new JTextField(20);
         control = new JTextField(20);
@@ -87,6 +99,7 @@ public class NewMessageDetailsPanel extends JPanel{
         JButton addwrite = new JButton("Add to WriteList");
         JButton addcontrol = new JButton("Add to ControlList");
 
+        //Adds contents of read JTextField to list, clears field
         addread.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -95,6 +108,8 @@ public class NewMessageDetailsPanel extends JPanel{
                     }
                 }
         );
+
+        //Adds contents of write JTextField to list, clears field
         addwrite.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -103,6 +118,8 @@ public class NewMessageDetailsPanel extends JPanel{
                     }
                 }
         );
+
+        //Adds contents of control JTextField to list, clears field
         addcontrol.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -113,7 +130,8 @@ public class NewMessageDetailsPanel extends JPanel{
         );
 
 
-
+        //controls the actions of checking/unchecking the boxes for various access controls
+        //checking the box will disable access controls.
         raccess.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -135,8 +153,12 @@ public class NewMessageDetailsPanel extends JPanel{
                     public void actionPerformed(ActionEvent event) {
                         if(waccess.isSelected()) {
                             write.setEditable(false);
+                            raccess.setSelected(true);
                             ListWrite.removeAllElements();
                             ListWrite.addElement("nschell");
+                            read.setEditable(false);
+                            ListRead.removeAllElements();
+                            ListRead.addElement("nschell");
                         }
                         else {
                             write.setEditable(true);
@@ -164,7 +186,7 @@ public class NewMessageDetailsPanel extends JPanel{
 
 
 
-
+        //Setup GUI using GBC
 
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -273,38 +295,7 @@ public class NewMessageDetailsPanel extends JPanel{
         add(caccess, gbc);
 
 
-        raccess.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        if(raccess.isSelected()) {
-                            read.setEditable(false);
-                            ListRead.removeAllElements();
-                            ListRead.addElement("nschell");
-                        }
-                        else {
-                            read.setEditable(true);
-                            ListRead.removeAllElements();
-                        }
-                    }
-                }
-        );
-
-        waccess.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        if(waccess.isSelected()) {
-                            write.setEditable(false);
-                            ListWrite.removeAllElements();
-                            ListWrite.addElement("nschell");
-                        }
-                        else {
-                            write.setEditable(true);
-                            ListWrite.removeAllElements();
-                        }
-                    }
-                }
-        );
-
+        //Dictates properties of close button
         close.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -313,29 +304,10 @@ public class NewMessageDetailsPanel extends JPanel{
                     }
                 });
 
-
-        caccess.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        if(caccess.isSelected()) {
-                            control.setEditable(false);
-                            ListControl.removeAllElements();
-                            ListControl.addElement("nschell");
-                        }
-                        else {
-                            control.setEditable(true);
-                            ListControl.removeAllElements();
-                        }
-                    }
-                }
-        );
-
-
-
-
         final JTextArea finalTextArea = textArea;
-
         final JTextArea finalTextArea1 = textArea;
+
+        //Clears the textareas
         clear.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -344,6 +316,8 @@ public class NewMessageDetailsPanel extends JPanel{
                     }
                 }
         );
+
+        //Saves the newly created message
         save.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -369,6 +343,9 @@ public class NewMessageDetailsPanel extends JPanel{
                         for(int y=0; y < listcontrolSize; y++) {
                             itemc[y] = listcontrol.getModel().getElementAt(y).toString();
                         }
+
+                        //Determines if access control is enabled.  If the box is checked, ac is disabled, and will return false
+                        //Note:  The list still defaults to a single username for each property
                         Boolean r = true, w = true, c = true;
                         if(raccess.isSelected()) {
                             r = false;

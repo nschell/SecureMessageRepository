@@ -2,6 +2,7 @@ package Gui.mainmenugui;
 
 import Gui.createnewmessagegui.NewMessage;
 import Gui.createnewmessagegui.NewMessageMainFrame;
+import Gui.deletemessagegui.DeleteMessageMainFrame;
 import Gui.openfilegui.OpenMessageMainFrame;
 
 import javax.swing.*;
@@ -82,6 +83,14 @@ public class DetailsPanel extends JPanel {
 
             }
 
+        });
+
+        delete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                DeleteMessageMainFrame d = new DeleteMessageMainFrame("Delete Message");
+                d.setVisible(true);
+                d.setSize(350, 120);
+            }
         });
     }
 }
