@@ -1,5 +1,7 @@
 package Main;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -10,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * UserInfo.XML will be referred to when a user attempts to login.
  */
 @XmlRootElement
+
 public class UsernamePassword {
     private String Username;
     private String Password;

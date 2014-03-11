@@ -1,6 +1,7 @@
 package Gui.openfilegui;
 
 import Main.AccessControl;
+import Main.CurrentUser;
 import Main.SecureDocument;
 import Main.XMLParse;
 
@@ -22,7 +23,9 @@ public class OpenMessageDetailsPanel extends JPanel {
     private JTextField filename;
 
     public OpenMessageDetailsPanel() {
-        String username = "nschell";
+        CurrentUser c = new CurrentUser();
+        c = XMLParse.AccessControlXMLToObj("c:\\Java\\Secure\\curr.xml");
+        String username = c.getUsername();
         Dimension size = getPreferredSize();
         size.height = 503;
         setPreferredSize(size);

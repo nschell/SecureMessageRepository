@@ -1,6 +1,7 @@
 package Gui.createnewmessagegui;
 
 import Main.AccessControl;
+import Main.CurrentUser;
 import Main.SecureDocument;
 import Main.XMLParse;
 
@@ -8,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -28,8 +30,11 @@ public class NewMessageDetailsPanel extends JPanel{
     private String filedirectory;
     public NewMessageDetailsPanel() {
 
+
+        CurrentUser c = new CurrentUser();
+        c = XMLParse.AccessControlXMLToObj("c:\\Java\\Secure\\curr.xml");
         //logged in as:
-        final String Username = "Temp";
+        final String Username = c.getUsername();
 
         //setting size and title
         Dimension size = getPreferredSize();
@@ -299,6 +304,7 @@ public class NewMessageDetailsPanel extends JPanel{
         close.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
+
 
                        System.exit(0);
                     }

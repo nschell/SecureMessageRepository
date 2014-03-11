@@ -69,4 +69,66 @@ public class XMLParse {
         return null;
     }
 
+    public static void AccessControlObjToXML(CurrentUser currentUser, String filePath) throws FileNotFoundException {
+        try {
+            JAXBContext context = JAXBContext.newInstance(CurrentUser.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            QName qName = new QName("main.java", "s");
+            JAXBElement<CurrentUser> root = new JAXBElement<CurrentUser>(qName, CurrentUser.class, currentUser);
+            marshaller.marshal(currentUser, new FileOutputStream(filePath));
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public static CurrentUser AccessControlXMLToObj(String filePath) {
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(CurrentUser.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            CurrentUser currentUser = (CurrentUser) unmarshaller.unmarshal(new File(filePath));
+            return currentUser;
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+    }
+
+    public static void AuthenticationObjectToXML(UsernamePassword usernamePassword, String filePath) throws FileNotFoundException {
+        try {
+            JAXBContext context = JAXBContext.newInstance(UsernamePassword.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            QName qName = new QName("main.java", "s");
+            JAXBElement<UsernamePassword> root = new JAXBElement<UsernamePassword>(qName, UsernamePassword.class, usernamePassword);
+            marshaller.marshal(usernamePassword, new FileOutputStream(filePath));
+
+        } catch (JAXBException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    public static UsernamePassword AuthenticationXMLToObject(String filePath) {
+
+        try {
+            JAXBContext context = JAXBContext.newInstance(UsernamePassword.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            UsernamePassword usernamePassword = (UsernamePassword) unmarshaller.unmarshal(new File(filePath));
+            return usernamePassword;
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+
+    }
+
 }

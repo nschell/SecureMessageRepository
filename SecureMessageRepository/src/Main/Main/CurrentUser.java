@@ -1,5 +1,7 @@
 package Main;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by
  */
@@ -8,6 +10,8 @@ package Main;
  *Will save the username to curr.xml, which will be deleted at the end of the session
  * curr.xml will provide username data to all applications
  */
+
+@XmlRootElement
 
 public class CurrentUser {
     private String username;

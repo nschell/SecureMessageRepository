@@ -1,6 +1,7 @@
 package Gui.deletemessagegui;
 
 import Main.AccessControl;
+import Main.CurrentUser;
 import Main.XMLParse;
 
 import javax.swing.*;
@@ -50,7 +51,9 @@ public class DeleteMessageMainFrame extends JFrame {
                         //parse xml to compare username to list
 
                         AccessControl a = new AccessControl();
-                        String username = "nschell";
+                        CurrentUser c = new CurrentUser();
+                        c = XMLParse.AccessControlXMLToObj("c:\\Java\\Secure\\curr.xml");
+                        String username = c.getUsername();
                         a = XMLParse.SecureXMLToObject(accesscontrol);
                         String[] control = a.getOwnControlList();
                         List<String> cntrl = Arrays.asList(control);
