@@ -222,7 +222,7 @@ public class NewMessageDetailsPanel extends JPanel{
         gbc.gridy = 3;
         add(close, gbc);
 
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 1;
         add(location, gbc);
 
