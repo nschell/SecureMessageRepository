@@ -1,4 +1,4 @@
-package Main;
+package edu.uml.nschell;
 
 import javax.xml.bind.*;
 import javax.xml.namespace.QName;

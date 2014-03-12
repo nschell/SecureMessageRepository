@@ -1,9 +1,8 @@
-package Gui.mainmenugui;
+package edu.uml.nschell.mainmenugui;
 
-import Gui.createnewmessagegui.NewMessage;
-import Gui.createnewmessagegui.NewMessageMainFrame;
-import Gui.deletemessagegui.DeleteMessageMainFrame;
-import Gui.openfilegui.OpenMessageMainFrame;
+import edu.uml.nschell.createnewmessagegui.NewMessageMainFrame;
+import edu.uml.nschell.deletemessagegui.DeleteMessageMainFrame;
+import edu.uml.nschell.openfilegui.OpenMessageMainFrame;
 
 import javax.swing.*;
 import java.awt.*;

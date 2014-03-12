@@ -1,4 +1,4 @@
-package Gui.openfilegui;
+package edu.uml.nschell.openfilegui;
 
 import javax.swing.*;
 import java.awt.*;

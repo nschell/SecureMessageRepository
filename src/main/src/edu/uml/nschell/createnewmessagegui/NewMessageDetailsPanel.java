@@ -1,15 +1,14 @@
-package Gui.createnewmessagegui;
+package edu.uml.nschell.createnewmessagegui;
 
-import Main.AccessControl;
-import Main.CurrentUser;
-import Main.SecureDocument;
-import Main.XMLParse;
+import edu.uml.nschell.AccessControl;
+import edu.uml.nschell.CurrentUser;
+import edu.uml.nschell.SecureDocument;
+import edu.uml.nschell.XMLParse;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Timestamp;
 import java.util.Date;

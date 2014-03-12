@@ -1,4 +1,4 @@
-package Gui.createnewmessagegui;
+package edu.uml.nschell.createnewmessagegui;
 
 import javax.swing.*;
 import java.awt.*;

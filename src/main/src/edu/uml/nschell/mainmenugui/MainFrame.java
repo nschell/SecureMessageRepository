@@ -1,4 +1,4 @@
-package Gui.mainmenugui;
+package edu.uml.nschell.mainmenugui;
 
 import javax.swing.*;
 import java.awt.*;

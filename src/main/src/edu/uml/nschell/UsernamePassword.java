@@ -1,4 +1,4 @@
-package Main;
+package edu.uml.nschell;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;

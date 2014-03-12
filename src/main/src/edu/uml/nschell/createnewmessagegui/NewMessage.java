@@ -1,18 +1,19 @@
-package Gui.mainmenugui;
+package edu.uml.nschell.createnewmessagegui;
 
 import javax.swing.*;
 
 /**
  * Created by nschell
  */
-public class MainMenu {
+public class NewMessage {
+    public NewMessage() {
 
+    }
     public static void main(String[] args) {
-
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame = new MainFrame("Secure Message Repository Main Menu");
-                frame.setSize(650, 400);
+                JFrame frame = new NewMessageMainFrame("Create New Secure Message");
+                frame.setSize(950,700);
                 frame.setResizable(false);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
@@ -30,9 +31,12 @@ public class MainMenu {
 
                 JMenu about = new JMenu("About");
                 menubar.add(about);
+
+
             }
         });
 
-
     }
+
 }
+

@@ -1,7 +1,5 @@
-package Test;
 
-import Main.SecureDocument;
-import Main.XMLParse;
+package edu.uml.nschell;
 
 import java.io.FileNotFoundException;
 import java.text.ParseException;
@@ -52,11 +50,11 @@ public class TestXMLParse {
         XMLParse.objectToXML(d, "C:\\test\\test.xml");
         SecureDocument testDoc = XMLParse.XMLToObject("C:\\test\\test.xml");
 
-        assertEquals(createDateExpected, testDoc.getCreateDate());
-        assertEquals(modifyDateExpected, testDoc.getCreateDate());
-        assertEquals(usernameExpected, testDoc.getUsername());
-        assertEquals(subjectExpected, testDoc.getSubject());
-        assertEquals(documentExpected, testDoc.getInformation());
-        assertEquals(accesscontrolExpected, testDoc.getAccessControl());
+        Assert.assertEquals(createDateExpected, testDoc.getCreateDate());
+        Assert.assertEquals(modifyDateExpected, testDoc.getCreateDate());
+        Assert.assertEquals(usernameExpected, testDoc.getUsername());
+        Assert.assertEquals(subjectExpected, testDoc.getSubject());
+        Assert.assertEquals(documentExpected, testDoc.getInformation());
+        Assert.assertEquals(accesscontrolExpected, testDoc.getAccessControl());
     }
 }

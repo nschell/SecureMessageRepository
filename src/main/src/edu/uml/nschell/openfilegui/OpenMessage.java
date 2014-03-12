@@ -1,6 +1,4 @@
-package Gui.openfilegui;
-
-import Gui.createnewmessagegui.NewMessageMainFrame;
+package edu.uml.nschell.openfilegui;
 
 import javax.swing.*;
 

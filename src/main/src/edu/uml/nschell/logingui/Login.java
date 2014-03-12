@@ -1,21 +1,28 @@
-package Gui.logingui;
+package edu.uml.nschell.logingui;
 
 /**
- * Created by
+ * Created by nschell
+ * This Login Class fulfills two functionalities:
+ * The Create User functionality will allow for the creation of a new user, saving userdata xml file in given directory
+ * There is a Master Password that only the "Security Manager" will have.  This password is required for all user creations.
+ * The Login functionality parses the userdata xml file, ensures that user is active and entering the right info.
+ * If username is wrong, error will pop up.  If password is wrong, program will terminate.
  */
 
 
-    import Gui.mainmenugui.MainFrame;
-    import Main.CurrentUser;
-    import Main.UsernamePassword;
-    import Main.XMLParse;
+    import edu.uml.nschell.mainmenugui.MainFrame;
+    import edu.uml.nschell.CurrentUser;
+    import edu.uml.nschell.UsernamePassword;
+    import edu.uml.nschell.XMLParse;
 
     import javax.swing.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
+    import java.io.File;
     import java.io.FileNotFoundException;
 
 public class Login{
+
 
         public static void main(String[] args) {
             JFrame frame = new JFrame("Login");
@@ -28,6 +35,8 @@ public class Login{
 
             frame.setVisible(true);
         }
+
+        /* Setup Panel GUI*/
 
         private static void placeComponents(JPanel panel) {
 
@@ -94,38 +103,62 @@ public class Login{
             registerButton.setBounds(350, 320, 130, 45);
             panel.add(registerButton);
 
+            /*listener for the login button*/
+
             loginButton.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent event) {
                             UsernamePassword u = new UsernamePassword();
-                            u = XMLParse.AuthenticationXMLToObject("c:\\Java\\Secure\\User" + userText.getText() + ".xml");
-                            String pw = u.getPassword();
-                            String un = u.getUsername();
-                            Boolean act = u.getActive();
-                            CurrentUser c = new CurrentUser();
+                            String filename = "c:\\Java\\Secure\\User" + userText.getText() + ".xml";
 
-                            if((pw.equals(passwordText.getText())) && (un.equals(userText.getText())) && (act = true))
-                            {
+                            //Check to ensure secure file directory was created.  An uncreated directory indicates that username is not found
+                            //If so, parse XML to compare username/password with user inputs
+
+                            File f = new File(filename);
+                            if(f.exists() && !f.isDirectory()) {
+                                u = XMLParse.AuthenticationXMLToObject("c:\\Java\\Secure\\User" + userText.getText() + ".xml");
+                                String pw = u.getPassword();
+                                String un = u.getUsername();
+                                Boolean act = u.getActive();
+                                CurrentUser c = new CurrentUser();
+
+                                //Opens up main menu
+
+                                if((pw.equals(passwordText.getText())) && (un.equals(userText.getText())) && (act = true))
+                                {
                                     MainFrame m = new MainFrame("Company Confidential Secure Message Repository");
                                     m.setVisible(true);
                                     m.setSize(650, 400);
 
                                     c.setUsername(un);
-                                try {
-                                    XMLParse.AccessControlObjToXML(c, "c:\\Java\\Secure\\curr.xml");
-                                } catch (FileNotFoundException e) {
-                                    e.printStackTrace();
-                                }
+                                    userText.setText("");
+                                    passwordText.setText("");
 
-                            }
-                            else {
-                                System.exit(0);
+                                    //Sets the current user file
+
+                                    try {
+                                        XMLParse.AccessControlObjToXML(c, "c:\\Java\\Secure\\curr.xml");
+                                    } catch (FileNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                                else {
+                                    System.exit(0);
+                                }
+                            } else {
+                                userText.setText("BAD USERNAME!!");
                             }
                     }
                 });
+
+            /* Creates a new user */
+
             registerButton.addActionListener(
                     new ActionListener() {
                         public void actionPerformed(ActionEvent event) {
+
+                            /*Passcode is the master password that allows for user creation */
 
                             String passcode = "123456";
                             UsernamePassword c = new UsernamePassword();
@@ -141,11 +174,22 @@ public class Login{
                                 c.setActive(false);
                             }
 
+                            /* Check that directory structure created, create XML file for each new user */
 
                             if(mpw.equals(passcode)) {
 
                                 try {
-                                    XMLParse.AuthenticationObjectToXML(c, "c:\\Java\\Secure\\User" + userText.getText() + ".xml");
+                                    String path = "c:\\Java\\Secure\\";
+                                    File f = new File(path);
+                                    if(!f.exists()) {
+                                        try {
+                                            f.mkdirs();
+                                        }
+                                        catch (SecurityException e) {
+
+                                        }
+                                    }
+                                    XMLParse.AuthenticationObjectToXML(c, "c:\\Java\\Secure\\User" + nuserText.getText() + ".xml");
                                 } catch (FileNotFoundException e) {
                                     e.printStackTrace();
                                 }

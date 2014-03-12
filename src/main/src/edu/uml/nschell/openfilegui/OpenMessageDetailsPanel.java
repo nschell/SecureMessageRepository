@@ -1,9 +1,9 @@
-package Gui.openfilegui;
+package edu.uml.nschell.openfilegui;
 
-import Main.AccessControl;
-import Main.CurrentUser;
-import Main.SecureDocument;
-import Main.XMLParse;
+import edu.uml.nschell.AccessControl;
+import edu.uml.nschell.CurrentUser;
+import edu.uml.nschell.SecureDocument;
+import edu.uml.nschell.XMLParse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -123,7 +123,7 @@ public class OpenMessageDetailsPanel extends JPanel {
                         /*If no access controls were set*/
                         if(rcon == false && wcon == false && ccon == false) {
                             finalTextArea.setText(s.getInformation());
-                            finalTextArea.setEditable(true);
+                            finalTextArea.setEditable(false);
 
                         }
 
@@ -173,6 +173,7 @@ public class OpenMessageDetailsPanel extends JPanel {
                             }
                             if(cntrl.contains(usrnme)) {
                                 del = true;
+                                System.out.println("True");
                             }
                             else {
                                 del = false;

@@ -1,7 +1,6 @@
-package Gui.deletemessagegui;
+package edu.uml.nschell.deletemessagegui;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by

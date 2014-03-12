@@ -1,8 +1,8 @@
-package Gui.deletemessagegui;
+package edu.uml.nschell.deletemessagegui;
 
-import Main.AccessControl;
-import Main.CurrentUser;
-import Main.XMLParse;
+import edu.uml.nschell.AccessControl;
+import edu.uml.nschell.CurrentUser;
+import edu.uml.nschell.XMLParse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,8 +61,12 @@ public class DeleteMessageMainFrame extends JFrame {
                         //if username is on the list, files will successfully delete
 
                         if(cntrl.contains(username)) {
-                            msg.delete();
-                            accCntrl.delete();
+                            if(msg.exists() && accCntrl.exists()) {
+                                msg.delete();
+                                accCntrl.delete();
+                            } else {
+                                path.setText("FILE DOES NOT EXIST");
+                            }
                         }
                         else{
                             path.setText("ERROR DELETING FILE");
