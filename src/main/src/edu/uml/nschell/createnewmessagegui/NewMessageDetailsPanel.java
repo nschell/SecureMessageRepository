@@ -1,15 +1,18 @@
 package edu.uml.nschell.createnewmessagegui;
 
-import edu.uml.nschell.AccessControl;
-import edu.uml.nschell.CurrentUser;
-import edu.uml.nschell.SecureDocument;
-import edu.uml.nschell.XMLParse;
+import edu.uml.nschell.*;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -27,13 +30,14 @@ public class NewMessageDetailsPanel extends JPanel{
     private JTextField write;
     private JTextField control;
     private String filedirectory;
-    public NewMessageDetailsPanel() {
-
+    public NewMessageDetailsPanel() throws Exception {
 
         CurrentUser c = new CurrentUser();
         c = XMLParse.AccessControlXMLToObj("c:\\Java\\Secure\\curr.xml");
         //logged in as:
-        final String Username = c.getUsername();
+        String userEncrypte = c.getUsername();
+        String userEncrypt = Decryption.decryptText(userEncrypte);
+        final String Username = Decryption.decryptText(userEncrypt);
 
         //setting size and title
         Dimension size = getPreferredSize();
@@ -191,112 +195,110 @@ public class NewMessageDetailsPanel extends JPanel{
 
 
         //Setup GUI using GBC
+         GridBagLayout gridbag = new GridBagLayout();
+         GridBagConstraints gbc = new GridBagConstraints();
+         setLayout(gridbag);
+        gbc.insets = new Insets(10, 10, 10, 10);
 
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.weightx = 0.5;
-        gbc.weighty = 0.5;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.weightx = 3;
+        gbc.weighty = 3;
 
         gbc.gridx = 0;
         gbc.gridy = 0;
+        add(subject, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
         add(sub, gbc);
 
-        gbc.gridx = 5;
-        gbc.gridy = 5;
-        add(textArea, gbc);
-
-        gbc.anchor = GridBagConstraints.SOUTH;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        add(save, gbc);
-
-        gbc.gridx = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 2;
+        gbc.weighty = 3;
+        gbc.gridx = 1;
         gbc.gridy = 2;
-        add(clear, gbc);
+        add(textArea, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
-        add(close, gbc);
+        add(location, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        add(location, gbc);
+        gbc.gridy = 4;
+        add(loc, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        add(filename, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        add(fn, gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 2;
-        add(loc, gbc);
-
-        gbc.gridx = 3;
-        gbc.gridy = 3;
-        add(subject, gbc);
-
-        gbc.gridx = 4;
-        gbc.gridy = 4;
-        add(sub, gbc);
-
-        gbc.gridx = 5;
-        gbc.gridy = 5;
-        add(filename, gbc);
-
-        gbc.gridx = 6;
-        gbc.gridy = 6;
-        add(fn, gbc);
-
-        gbc.gridx = 7;
-        gbc.gridy = 7;
-        add(addcontrol, gbc);
-
-        gbc.gridx = 8;
-        gbc.gridy = 8;
-        add(read, gbc);
-
-        gbc.gridx = 9;
-        gbc.gridy = 9;
-        add(write, gbc);
-
-
-        gbc.gridx = 10;
-        gbc.gridy = 10;
-        add(control, gbc);
-
-        gbc.gridx = 11;
-        gbc.gridy = 11;
-        add(addread, gbc);
-
-        gbc.gridx = 12;
-        gbc.gridy = 12;
-        add(addwrite, gbc);
-
-        gbc.gridx = 13;
-        gbc.gridy = 13;
         add(listread, gbc);
 
-        gbc.gridx = 14;
-        gbc.gridy = 14;
-        add(listwrite, gbc);
 
-        gbc.gridx = 15;
-        gbc.gridy = 15;
-        add(listcontrol, gbc);
-
-
-        gbc.gridx = 17;
-        gbc.gridy = 17;
+        gbc.gridx = 2;
+        gbc.gridy = 3;
         add(raccess, gbc);
 
 
-        gbc.gridx = 18;
-        gbc.gridy = 18;
+        gbc.gridx = 2;
+        gbc.gridy = 4;
+        add(read, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 5;
+        add(addread, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 2;
+        add(listwrite, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 3;
         add(waccess, gbc);
 
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        add(write, gbc);
 
-        gbc.gridx = 19;
-        gbc.gridy = 19;
+        gbc.gridx = 3;
+        gbc.gridy = 5;
+        add(addwrite, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 2;
+        add(listcontrol, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 3;
         add(caccess, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 4;
+        add(control, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 5;
+        add(addcontrol, gbc);
+
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 6;
+        gbc.gridy = 1;
+        add(save, gbc);
+
+        gbc.gridx = 6;
+        gbc.gridy = 2;
+        add(clear, gbc);
+
+        gbc.gridx = 6;
+        gbc.gridy = 3;
+        add(close, gbc);
 
 
         //Dictates properties of close button
@@ -330,23 +332,39 @@ public class NewMessageDetailsPanel extends JPanel{
 
                         int listreadSize = listread.getModel().getSize();
                         String[] item = new String[listreadSize];
+                        String temp;
 
                         for(int i=0; i < listreadSize; i++) {
-                            item[i] = listread.getModel().getElementAt(i).toString();
+                            temp = listread.getModel().getElementAt(i).toString();
+                            try {
+                                item[i] = Encryption.encryptText(temp);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         int listwriteSize = listwrite.getModel().getSize();
                         String[] itemw = new String[listwriteSize];
 
                         for(int x=0; x < listwriteSize; x++) {
-                            itemw[x] = listwrite.getModel().getElementAt(x).toString();
+                            temp = listwrite.getModel().getElementAt(x).toString();
+                            try {
+                                itemw[x] = Encryption.encryptText(temp);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         int listcontrolSize = listcontrol.getModel().getSize();
                         String[] itemc = new String[listcontrolSize];
 
                         for(int y=0; y < listcontrolSize; y++) {
-                            itemc[y] = listcontrol.getModel().getElementAt(y).toString();
+                            temp = listcontrol.getModel().getElementAt(y).toString();
+                            try {
+                                itemc[y] = Encryption.encryptText(temp);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
 
                         //Determines if access control is enabled.  If the box is checked, ac is disabled, and will return false
@@ -363,13 +381,31 @@ public class NewMessageDetailsPanel extends JPanel{
                         if(caccess.isSelected()) {
                             c = false;
                         }
-                      String msg = finalTextArea.getText();
-                      String subject = sub.getText();
-                      Date date = new java.util.Date();
+                      String msgtemp = finalTextArea.getText();
+                        String msg = null;
+                        try {
+                            msg = Encryption.encryptText(msgtemp);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        String subjecttemp = sub.getText();
+                        String subject = null;
+                        try {
+                            subject = Encryption.encryptText(subjecttemp);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        Date date = new java.util.Date();
                       Date curDate = new Timestamp(date.getTime());
                       Date modifyDate = new Timestamp(date.getTime());
-                      String name = Username;
-                      Boolean AccCon = true;
+                      String nametemp = Username;
+                        String name = null;
+                        try {
+                            name = Encryption.encryptText(nametemp);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        Boolean AccCon = true;
                         String filename = fn.getText();
                         String directoryLocation = loc.getText();
 

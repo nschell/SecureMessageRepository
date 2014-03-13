@@ -10,16 +10,20 @@ package edu.uml.nschell.logingui;
  */
 
 
+    import edu.uml.nschell.*;
     import edu.uml.nschell.mainmenugui.MainFrame;
-    import edu.uml.nschell.CurrentUser;
-    import edu.uml.nschell.UsernamePassword;
-    import edu.uml.nschell.XMLParse;
 
+    import javax.crypto.BadPaddingException;
+    import javax.crypto.IllegalBlockSizeException;
+    import javax.crypto.NoSuchPaddingException;
     import javax.swing.*;
     import java.awt.event.ActionEvent;
     import java.awt.event.ActionListener;
     import java.io.File;
     import java.io.FileNotFoundException;
+    import java.io.UnsupportedEncodingException;
+    import java.security.InvalidKeyException;
+    import java.security.NoSuchAlgorithmException;
 
 public class Login{
 
@@ -117,11 +121,23 @@ public class Login{
                             File f = new File(filename);
                             if(f.exists() && !f.isDirectory()) {
                                 u = XMLParse.AuthenticationXMLToObject("c:\\Java\\Secure\\User" + userText.getText() + ".xml");
-                                String pw = u.getPassword();
-                                String un = u.getUsername();
+                                String pwe = u.getPassword();
+                                String une = u.getUsername();
                                 Boolean act = u.getActive();
                                 CurrentUser c = new CurrentUser();
 
+                                String pw = null;
+                                try {
+                                    pw = Decryption.decryptText(pwe);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                String un = null;
+                                try {
+                                    un = Decryption.decryptText(une);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 //Opens up main menu
 
                                 if((pw.equals(passwordText.getText())) && (un.equals(userText.getText())) && (act = true))
@@ -130,7 +146,13 @@ public class Login{
                                     m.setVisible(true);
                                     m.setSize(650, 400);
 
-                                    c.setUsername(un);
+
+                                    try {
+                                        c.setUsername(un);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
                                     userText.setText("");
                                     passwordText.setText("");
 
@@ -163,10 +185,19 @@ public class Login{
                             String passcode = "123456";
                             UsernamePassword c = new UsernamePassword();
                             String mpw = mPwText.getText();
-                            String usr = nuserText.getText();
-                            String pw = npasswordText.getText();
-                            c.setUsername(usr);
-                            c.setPassword(pw);
+                            String usre = nuserText.getText();
+                            String pwe = npasswordText.getText();
+
+                            try {
+                                    String usr = Encryption.encryptText(usre);
+                                    String pw = Encryption.encryptText(pwe);
+                                     c.setUsername(usr);
+                                     c.setPassword(pw);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
                             if(active.isSelected()) {
                                 c.setActive(true);
                             }

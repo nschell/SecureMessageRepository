@@ -1,7 +1,13 @@
 package edu.uml.nschell.createnewmessagegui;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by nschell
@@ -11,7 +17,7 @@ public class NewMessageMainFrame extends JFrame {
     private NewMessageDetailsPanel detailsPanel;
 
 
-    public NewMessageMainFrame(String title) {
+    public NewMessageMainFrame(String title) throws Exception {
         super(title);
 
         setLayout(new BorderLayout());
@@ -22,7 +28,7 @@ public class NewMessageMainFrame extends JFrame {
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
 
-        detailsPanel = new NewMessageDetailsPanel();
+       detailsPanel = new NewMessageDetailsPanel();
 
         Container c = getContentPane();
         c.add(textArea, BorderLayout.CENTER);

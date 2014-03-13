@@ -4,10 +4,16 @@ import edu.uml.nschell.createnewmessagegui.NewMessageMainFrame;
 import edu.uml.nschell.deletemessagegui.DeleteMessageMainFrame;
 import edu.uml.nschell.openfilegui.OpenMessageMainFrame;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by nschell
@@ -63,10 +69,17 @@ public class DetailsPanel extends JPanel {
         gbc.gridy = 1;
         add(delete, gbc);
 
+        /* Action listeners to handle button clicks */
+
         create.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-                NewMessageMainFrame n = new NewMessageMainFrame("Create your new message");
+                NewMessageMainFrame n = null;
+                try {
+                    n = new NewMessageMainFrame("Create your new message");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 n.setVisible(true);
                 n.setSize(950, 700);
 
@@ -76,7 +89,12 @@ public class DetailsPanel extends JPanel {
         open.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent event) {
-                OpenMessageMainFrame n = new OpenMessageMainFrame("Open message");
+                OpenMessageMainFrame n = null;
+                try {
+                    n = new OpenMessageMainFrame("Open message");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 n.setVisible(true);
                 n.setSize(950, 700);
 

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_securemessagerepository" default="compile.module.securemessagerepository">
+  <dirname property="module.securemessagerepository.basedir" file="${ant.file.module_securemessagerepository}"/>
+  
+  <property name="module.jdk.home.securemessagerepository" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.securemessagerepository" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.securemessagerepository" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.securemessagerepository" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="securemessagerepository.output.dir" value="${module.securemessagerepository.basedir}/../out/production/SecureMessageRepository"/>
+  <property name="securemessagerepository.testoutput.dir" value="${module.securemessagerepository.basedir}/../out/test/SecureMessageRepository"/>
+  
+  <path id="securemessagerepository.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="securemessagerepository.module.production.classpath">
+    <path refid="${module.jdk.classpath.securemessagerepository}"/>
+    <pathelement location="${basedir}/../../Downloads/junit-4.11.jar"/>
+  </path>
+  
+  <path id="securemessagerepository.runtime.production.module.classpath">
+    <pathelement location="${securemessagerepository.output.dir}"/>
+    <pathelement location="${basedir}/../../Downloads/junit-4.11.jar"/>
+  </path>
+  
+  <path id="securemessagerepository.module.classpath">
+    <path refid="${module.jdk.classpath.securemessagerepository}"/>
+    <pathelement location="${securemessagerepository.output.dir}"/>
+    <pathelement location="${basedir}/../../Downloads/junit-4.11.jar"/>
+  </path>
+  
+  <path id="securemessagerepository.runtime.module.classpath">
+    <pathelement location="${securemessagerepository.testoutput.dir}"/>
+    <pathelement location="${securemessagerepository.output.dir}"/>
+    <pathelement location="${basedir}/../../Downloads/junit-4.11.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.securemessagerepository">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.securemessagerepository">
+    <patternset refid="excluded.from.module.securemessagerepository"/>
+  </patternset>
+  
+  <path id="securemessagerepository.module.sourcepath">
+    <dirset dir="${module.securemessagerepository.basedir}/../../SecureMessageRepository">
+      <include name="SecureMessageRepository/src"/>
+      <include name="SecureMessageRepository/src/Main"/>
+    </dirset>
+  </path>
+  
+  <path id="securemessagerepository.module.test.sourcepath">
+    <dirset dir="${module.securemessagerepository.basedir}/../../SecureMessageRepository">
+      <include name="SecureMessageRepository"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.securemessagerepository" depends="compile.module.securemessagerepository.production,compile.module.securemessagerepository.tests" description="Compile module SecureMessageRepository"/>
+  
+  <target name="compile.module.securemessagerepository.production" depends="register.custom.compilers" description="Compile module SecureMessageRepository; production classes">
+    <mkdir dir="${securemessagerepository.output.dir}"/>
+    <javac2 destdir="${securemessagerepository.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.securemessagerepository}/javac">
+      <compilerarg line="${compiler.args.securemessagerepository}"/>
+      <bootclasspath refid="securemessagerepository.module.bootclasspath"/>
+      <classpath refid="securemessagerepository.module.production.classpath"/>
+      <src refid="securemessagerepository.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.securemessagerepository"/>
+    </javac2>
+    
+    <copy todir="${securemessagerepository.output.dir}">
+      <fileset dir="${module.securemessagerepository.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.securemessagerepository.basedir}/src/Main">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.securemessagerepository.tests" depends="register.custom.compilers,compile.module.securemessagerepository.production" description="compile module SecureMessageRepository; test classes" unless="skip.tests">
+    <mkdir dir="${securemessagerepository.testoutput.dir}"/>
+    <javac2 destdir="${securemessagerepository.testoutput.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.securemessagerepository}/javac">
+      <compilerarg line="${compiler.args.securemessagerepository}"/>
+      <bootclasspath refid="securemessagerepository.module.bootclasspath"/>
+      <classpath refid="securemessagerepository.module.classpath"/>
+      <src refid="securemessagerepository.module.test.sourcepath"/>
+      <patternset refid="excluded.from.compilation.securemessagerepository"/>
+    </javac2>
+    
+    <copy todir="${securemessagerepository.testoutput.dir}">
+      <fileset dir="${module.securemessagerepository.basedir}">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="clean.module.securemessagerepository" description="cleanup module">
+    <delete dir="${securemessagerepository.output.dir}"/>
+    <delete dir="${securemessagerepository.testoutput.dir}"/>
+  </target>
+</project>

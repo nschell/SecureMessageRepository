@@ -1,7 +1,13 @@
 package edu.uml.nschell.openfilegui;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created
@@ -10,7 +16,7 @@ public class OpenMessageMainFrame extends JFrame {
 
     private OpenMessageDetailsPanel detailsPanel;
 
-    public OpenMessageMainFrame(String title) {
+    public OpenMessageMainFrame(String title) throws Exception {
     super(title);
 
     setLayout(new BorderLayout());

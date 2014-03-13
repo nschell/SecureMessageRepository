@@ -4,11 +4,17 @@ import edu.uml.nschell.AccessControl;
 import edu.uml.nschell.CurrentUser;
 import edu.uml.nschell.XMLParse;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.List;
 
@@ -53,7 +59,12 @@ public class DeleteMessageMainFrame extends JFrame {
                         AccessControl a = new AccessControl();
                         CurrentUser c = new CurrentUser();
                         c = XMLParse.AccessControlXMLToObj("c:\\Java\\Secure\\curr.xml");
-                        String username = c.getUsername();
+                        String username = null;
+                        try {
+                            username = c.getUsername();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         a = XMLParse.SecureXMLToObject(accesscontrol);
                         String[] control = a.getOwnControlList();
                         List<String> cntrl = Arrays.asList(control);

@@ -1,6 +1,12 @@
 package edu.uml.nschell.createnewmessagegui;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.*;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by nschell
@@ -12,7 +18,12 @@ public class NewMessage {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                JFrame frame = new NewMessageMainFrame("Create New Secure Message");
+                JFrame frame = null;
+                try {
+                    frame = new NewMessageMainFrame("Create New Secure Message");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 frame.setSize(950,700);
                 frame.setResizable(false);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
