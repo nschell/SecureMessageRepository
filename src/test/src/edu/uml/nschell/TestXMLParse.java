@@ -9,7 +9,6 @@ import java.util.Locale;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 
 /**
@@ -50,11 +49,11 @@ public class TestXMLParse {
         XMLParse.objectToXML(d, "C:\\test\\test.xml");
         SecureDocument testDoc = XMLParse.XMLToObject("C:\\test\\test.xml");
 
-        Assert.assertEquals(createDateExpected, testDoc.getCreateDate());
-        Assert.assertEquals(modifyDateExpected, testDoc.getCreateDate());
-        Assert.assertEquals(usernameExpected, testDoc.getUsername());
-        Assert.assertEquals(subjectExpected, testDoc.getSubject());
-        Assert.assertEquals(documentExpected, testDoc.getInformation());
-        Assert.assertEquals(accesscontrolExpected, testDoc.getAccessControl());
+        assertEquals("Create Date should be equal", createDateExpected, testDoc.getCreateDate());
+        assertEquals("Modify Date should be equal", modifyDateExpected, testDoc.getCreateDate());
+        assertEquals("Usernames should be the same", usernameExpected, testDoc.getUsername());
+        assertEquals("Subject should be the same", subjectExpected, testDoc.getSubject());
+        assertEquals("Document should be the same", documentExpected, testDoc.getInformation());
+        assertEquals("Access controls should be the same", accesscontrolExpected, testDoc.getAccessControl());
     }
 }

@@ -9,9 +9,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.Timestamp;
 import java.util.*;
 import java.util.List;
 
@@ -99,46 +102,58 @@ public class OpenMessageDetailsPanel extends JPanel {
                         String p = path.getText();
                         String openfilename = p + "\\" + fn + ".xml";
                         String openaccesscontrolfilename = p + "\\" + fn + "accesscontrol" + ".xml";
-                        AccessControl a = XMLParse.SecureXMLToObject(openaccesscontrolfilename);
-                        SecureDocument s = XMLParse.XMLToObject(openfilename);
-                        Boolean rcon = a.getReadControl();
-                        Boolean wcon = a.getWriteControl();
-                        Boolean ccon = a.getOwnControl();
+                        File file = new File(openfilename);
+                        File accfile = new File(openaccesscontrolfilename);
+                        if(file.exists() && accfile.exists()) {
 
-                        String[] read = a.getReadControlList();
-                        String[] readtemp = a.getReadControlList();
-                        String[] write = a.getWriteControlList();
-                        String[] writetemp = a.getWriteControlList();
-                        String[] control = a.getOwnControlList();
-                        String[] controltemp = a.getOwnControlList();
-                        for(int i = 0; i < read.length; i++) {
+                            AccessControl a = XMLParse.SecureXMLToObject(openaccesscontrolfilename);
+                            SecureDocument s = XMLParse.XMLToObject(openfilename);
+
+                            String[] write = a.getWriteControlList();
+                            List<String> wr = Arrays.asList(write);
+                            CurrentUser c = new CurrentUser();
+                            c = XMLParse.AccessControlXMLToObj("c:\\Java\\Secure\\curr.xml");
+                            String usrnmetmp = null;
+                            String usrnme = null;
                             try {
-                                read[i] = Decryption.decryptText(readtemp[i]);
+                                usrnmetmp = c.getUsername();
+                                usrnme = Encryption.encryptText(usrnmetmp);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
-                        for(int i = 0; i < write.length; i++) {
-                            try {
-                                write[i] = Decryption.decryptText(writetemp[i]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                            for(int i = 0; i<write.length; i++) {
+
                             }
-                        }
-                        for(int i = 0; i < control.length; i++) {
-                            try {
-                                control[i] = Decryption.decryptText(controltemp[i]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+
+                            Date date = new java.util.Date();
+                            Date mod = new java.sql.Timestamp(date.getTime());
+                            if(wr.contains(usrnme)) {
+                                s.setModifiedDate(mod);
+                                String temp = null;
+                                try {
+                                      temp = Encryption.encryptText(finalTextArea.getText());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                s.setInformation(temp);
+
+                                try {
+                                    XMLParse.objectToXML(s, openfilename);
+                                } catch (FileNotFoundException e) {
+                                    e.printStackTrace();
+                                }
                             }
+                            else {
+                                finalTextArea.setText("CANNOT SAVE");
+                            }
+
+                        } else {
+                            filename.setText("Cannot Save:  Wrong Path Specified");
                         }
-                        List<String> cntrl = Arrays.asList(control);
-                        List<String> wrte = Arrays.asList(write);
-                        List<String> rd = Arrays.asList(read);
 
                     }
                 }
-        );
+            );
 
         open.addActionListener(
                 new ActionListener() {
@@ -147,132 +162,89 @@ public class OpenMessageDetailsPanel extends JPanel {
                         String p = path.getText();
                         String openfilename = p + "\\" + fn + ".xml";
                         String openaccesscontrolfilename = p + "\\" + fn + "accesscontrol" + ".xml";
-                        AccessControl a = XMLParse.SecureXMLToObject(openaccesscontrolfilename);
-                        SecureDocument s = XMLParse.XMLToObject(openfilename);
-                        Boolean rcon = a.getReadControl();
-                        Boolean wcon = a.getWriteControl();
-                        Boolean ccon = a.getOwnControl();
+                        File file = new File(openfilename);
+                        File accfile = new File(openaccesscontrolfilename);
+                        if(file.exists() && accfile.exists()) {
+                            AccessControl a = XMLParse.SecureXMLToObject(openaccesscontrolfilename);
+                            SecureDocument s = XMLParse.XMLToObject(openfilename);
+                            Boolean rcon = a.getReadControl();
+                            Boolean wcon = a.getWriteControl();
+                            Boolean ccon = a.getOwnControl();
 
+                            String[] read = a.getReadControlList();
+                            String[] readtemp = a.getReadControlList();
+                            String[] write = a.getWriteControlList();
+                            String[] writetemp = a.getWriteControlList();
+                            String[] control = a.getOwnControlList();
+                            String[] controltemp = a.getOwnControlList();
+                            for(int i = 0; i < read.length; i++) {
+                                try {
+                                    read[i] = Decryption.decryptText(readtemp[i]);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            for(int i = 0; i < write.length; i++) {
+                                try {
+                                    write[i] = Decryption.decryptText(writetemp[i]);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            for(int i = 0; i < control.length; i++) {
+                                try {
+                                    control[i] = Decryption.decryptText(controltemp[i]);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            List<String> wrte = Arrays.asList(write);
+                            List<String> rd = Arrays.asList(read);
 
-                        String[] read = a.getReadControlList();
-                        String[] readtemp = a.getReadControlList();
-                        String[] write = a.getWriteControlList();
-                        String[] writetemp = a.getWriteControlList();
-                        String[] control = a.getOwnControlList();
-                        String[] controltemp = a.getOwnControlList();
-                        for(int i = 0; i < read.length; i++) {
+                            jModifyDate.setText(s.getModifiedDate().toString());
+                            jDateCreated.setText(s.getCreateDate().toString());
+                            jModifyDate.setEditable(false);
+                            jDateCreated.setEditable(false);
+                            String subtemp = s.getSubject();
+                            String sub = null;
                             try {
-                                read[i] = Decryption.decryptText(readtemp[i]);
+                                  sub = Decryption.decryptText(subtemp);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
-                        for(int i = 0; i < write.length; i++) {
+                            jSubject.setText(sub);
+                            jSubject.setEditable(false);
+                            String usrnmetemp = s.getUsername();
+                            String usrnme = null;
                             try {
-                                write[i] = Decryption.decryptText(writetemp[i]);
+                                usrnme = Decryption.decryptText(usrnmetemp);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
-                        for(int i = 0; i < control.length; i++) {
-                            try {
-                                control[i] = Decryption.decryptText(controltemp[i]);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        List<String> cntrl = Arrays.asList(control);
-                        List<String> wrte = Arrays.asList(write);
-                        List<String> rd = Arrays.asList(read);
+                            Boolean del = false;
+                            Boolean readfile = false;
+                            Boolean writefile = false;
 
-                        jModifyDate.setText(s.getModifiedDate().toString());
-                        jDateCreated.setText(s.getCreateDate().toString());
-                        jModifyDate.setEditable(false);
-                        jDateCreated.setEditable(false);
-                        String subtemp = s.getSubject();
-                        String sub = null;
-                        try {
-                              sub = Decryption.decryptText(subtemp);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        jSubject.setText(sub);
-                        jSubject.setEditable(false);
-                        String usrnmetemp = s.getUsername();
-                        String usrnme = null;
-                        try {
-                            usrnme = Decryption.decryptText(usrnmetemp);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        Boolean del = false;
-                        Boolean readfile = false;
-                        Boolean writefile = false;
-
-                        //If/Else statements to determine access rights
+                            //If/Else statements to determine access rights
 
 
-                        /*If no access controls were set*/
-                        if(rcon == false && wcon == false && ccon == false) {
-                            String infotemp = s.getInformation();
-                            String info = null;
-                            try {
-                                  info = Decryption.decryptText(infotemp);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            finalTextArea.setText(info);
-                            finalTextArea.setEditable(false);
-
-                        }
-
-                        /*If full control/delete access controls were set*/
-                        else if(rcon == false && wcon == false && ccon == true) {
-
-                            String infotemp = s.getInformation();
-                            String info = null;
-                            try {
-                                info = Decryption.decryptText(infotemp);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            finalTextArea.setText(info);
-                            finalTextArea.setEditable(true);
-                            if(cntrl.contains(usrnme)) {
-                                del = true;
-                            }
-                            else {
-                                del = false;
-                            }
-                        }
-
-                        /*If full control/delete access conrols and write controls were set*/
-                        else if(rcon == false && wcon == true && ccon == true) {
-                            String infotemp = s.getInformation();
-                            String info = null;
-                            try {
-                                info = Decryption.decryptText(infotemp);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            finalTextArea.setText(info);
-                            if(wrte.contains(usrnme)) {
+                            /*If no access controls were set*/
+                            if(rcon == false && wcon == false) {
+                                String infotemp = s.getInformation();
+                                String info = null;
+                                try {
+                                      info = Decryption.decryptText(infotemp);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                finalTextArea.setText(info);
                                 finalTextArea.setEditable(true);
-                            }
-                            else {
-                                finalTextArea.setEditable(false);
-                            }
-                            if(cntrl.contains(usrnme)) {
-                                del = true;
-                            }
-                            else {
-                                del = false;
-                            }
-                        }
 
-                        /*If full control/delete access controls, write controls and read controls were set*/
-                        else if(rcon == true && wcon == true && ccon == true) {
-                            if(rd.contains(usrnme)) {
+                            }
+
+
+                            /*If full control/delete access conrols and write controls were set*/
+                            else if(rcon == false && wcon == true) {
                                 String infotemp = s.getInformation();
                                 String info = null;
                                 try {
@@ -281,30 +253,45 @@ public class OpenMessageDetailsPanel extends JPanel {
                                     e.printStackTrace();
                                 }
                                 finalTextArea.setText(info);
+                                if(wrte.contains(usrnme)) {
+                                    finalTextArea.setEditable(true);
+                                }
+                                else {
+                                    finalTextArea.setEditable(false);
+                                }
                             }
-                            else {
-                                finalTextArea.setText("Error:  Access Denied!");
+
+                            /*If full control/delete access controls, write controls and read controls were set*/
+                            else if(rcon == true && wcon == true) {
+                                if(rd.contains(usrnme)) {
+                                    String infotemp = s.getInformation();
+                                    String info = null;
+                                    try {
+                                        info = Decryption.decryptText(infotemp);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    finalTextArea.setText(info);
+                                }
+                                else {
+                                    finalTextArea.setText("Error:  Access Denied!");
+                                    System.out.println(usrnme);
+                                }
+                                if(wrte.contains(usrnme)) {
+                                    finalTextArea.setEditable(true);
+                                }
+                                else {
+                                    finalTextArea.setEditable(false);
+                                }
                             }
-                            if(wrte.contains(usrnme)) {
-                                finalTextArea.setEditable(true);
-                            }
-                            else {
-                                finalTextArea.setEditable(false);
-                            }
-                            if(cntrl.contains(usrnme)) {
-                                del = true;
-                                System.out.println("True");
-                            }
-                            else {
-                                del = false;
-                            }
+
+
+                        } else {
+                            path.setText("Cannot open File");
                         }
 
 
-                            }
-
-
-
+                    }
 
                 }
         );
